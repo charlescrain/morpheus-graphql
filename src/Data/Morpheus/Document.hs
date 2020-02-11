@@ -8,6 +8,8 @@ module Data.Morpheus.Document
   , importGQLDocument
   , importGQLDocumentWithNamespace
   , parseDSL
+  , toTHDefinitions
+  , declareTypes
   )
 where
 
@@ -27,16 +29,18 @@ import           Data.Morpheus.Execution.Document.Compile
                                                 ( compileDocument
                                                 , gqlDocument
                                                 )
+import           Data.Morpheus.Execution.Document.Declare
+                                                ( declareTypes )
+import           Data.Morpheus.Execution.Document.Convert
+                                                ( toTHDefinitions )
 import           Data.Morpheus.Execution.Server.Resolve
                                                 ( RootResCon
                                                 , fullSchema
                                                 )
 import           Data.Morpheus.Parsing.Document.TypeSystem
-                                                ( parseSchema 
-                                                )
+                                                ( parseSchema )
 import           Data.Morpheus.Rendering.RenderGQL
-                                                ( renderGraphQLDocument 
-                                                )
+                                                ( renderGraphQLDocument )
 import           Data.Morpheus.Schema.SchemaAPI ( defaultTypes )
 import           Data.Morpheus.Types            ( GQLRootResolver )
 import           Data.Morpheus.Types.Internal.AST
@@ -50,7 +54,7 @@ import           Data.Morpheus.Types.Internal.Resolving
 import           Data.Morpheus.Validation.Document.Validation
                                                 ( validatePartialDocument )
 
-                                              
+
 parseDSL :: ByteString -> Either String Schema
 parseDSL doc = case parseGraphQLDocument doc of
   Failure errors     -> Left (show errors)
