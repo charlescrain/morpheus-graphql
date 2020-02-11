@@ -46,6 +46,11 @@ library:
     - Data.Morpheus.Document
     - Data.Morpheus.Client
     - Data.Morpheus.Types.Internal.AST
+    ###########################################
+    - Data.Morpheus.Parsing.Document.TypeSystem
+    - Data.Morpheus.Types.Internal.Resolving.Core
+    - Data.Morpheus.Types.IO
+    - Data.Morpheus.Parsing.Request.Parser
   ghc-options: -Wall
 
 tests:
